@@ -62,7 +62,7 @@ BotLog.defaultProps = {
 
 BotLog.propTypes = {
   messages: PropTypes.arrayOf(PropTypes.string),
-  limit: Proptypes.number
+  limit: PropTypes.number
 };
 
 export default BotLog;
