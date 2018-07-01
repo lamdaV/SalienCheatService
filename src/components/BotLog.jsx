@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Message, Segment } from "semantic-ui-react";
 
 class BotLog extends Component {
@@ -57,6 +58,11 @@ class BotLog extends Component {
 BotLog.defaultProps = {
   messages: [],
   limit: 100
+};
+
+BotLog.propTypes = {
+  messages: PropTypes.arrayOf(PropTypes.string),
+  limit: Proptypes.number
 };
 
 export default BotLog;
