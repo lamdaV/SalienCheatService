@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Button, Divider, Form, Message } from "semantic-ui-react";
+import { Button, Divider, Form, Header, Message } from "semantic-ui-react";
 import io from "socket.io-client";
 
 import WorkerService from "../services/WorkerService";
@@ -102,6 +102,8 @@ class TokenForm extends Component {
   render() {
     return (
       <div>
+        <Header content="Credentials"
+                textAlign="left"/>
         <Form error={this.state.error !== null}>
           <Form.Input placeholder="Steam Token"
                       type="text"
@@ -128,18 +130,19 @@ class TokenForm extends Component {
                         checked={this.state.limit === 1000}
                         onChange={this.handleMessageLimit}/>
           </Form.Group>
-          <Button type="submit"
-                  primary
-                  fluid
-                  content="Submit"
-                  disabled={this.state.token.length !== 32 && !this.state.secret}
-                  onClick={this.handleSubmit}/>
-          <Button type="submit"
-                  color="red"
-                  fluid
-                  content="Stop"
-                  disabled={this.state.token.length !== 32 && !this.state.secret}
-                  onClick={this.handleStop}/>
+          <Button.Group fluid>
+            <Button type="submit"
+              primary
+              content="Submit"
+              disabled={this.state.token.length !== 32 && !this.state.secret}
+              onClick={this.handleSubmit}/>
+            <Button.Or/>
+            <Button type="submit"
+              color="red"
+              content="Stop"
+              disabled={this.state.token.length !== 32 && !this.state.secret}
+              onClick={this.handleStop}/>
+          </Button.Group>
           <Message error
                    header="Error"
                    content={this.state.error}/>
