@@ -7,16 +7,28 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "bunyan": "^1.8.12",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts": "1.1.4",
     "semantic-ui-react": "^0.81.3",
+    "serve-favicon": "^2.5.0",
+    "socket.io": "^2.1.1",
     "socket.io-client": "^2.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serve": "node src/server.js",
+    "dev": "./node_modules/.bin/nodemon src/server.js | ./node_modules/.bin/bunyan -o short",
+    "setup": "mkdir -p ./logs/"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
   }
 }
