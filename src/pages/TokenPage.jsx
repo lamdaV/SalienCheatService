@@ -13,7 +13,7 @@ class TokenPage extends Component {
         <Segment style={segmentStyle}>
           <Header content="Salien Cheat Service"
                   textAlign="center"/>
-          <TokenForm worker="http://localhost:8181"/>
+          <TokenForm worker="http://worker1.lamdav.com"/>
         </Segment>
       </Container>
     );
