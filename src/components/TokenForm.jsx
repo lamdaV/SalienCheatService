@@ -89,7 +89,7 @@ class TokenForm extends Component {
   }
 
   componentDidMount() {
-    const socket = io("http://localhost:8181");
+    const socket = io(this.props.worker);
     this.setState((prevState, props) => Object.assign(prevState, {socket}));
   }
 
