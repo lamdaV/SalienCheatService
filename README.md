@@ -3,6 +3,8 @@ The goal of this project was to be able to to provide a platform to host
 other SalienCheat bot 24/7 for others. One of the motivation for this
 project was the inability to use Heroku workers after a mass suspension.
 
+![DemoImage](https://raw.githubusercontent.com/lamdaV/SalienCheatService/master/demo.png?token=AK60HfKg-GoEmDjHuU2eze3wj7A5HcKaks5bQf0ywA%3D%3D)
+
 This project relies on
 - [SteamDB/SalienCheat](https://github.com/SteamDatabase/SalienCheat).
 
