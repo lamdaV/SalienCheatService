@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { Button, Divider, Form, Message } from "semantic-ui-react";
 import io from "socket.io-client";
 
@@ -155,5 +156,9 @@ class TokenForm extends Component {
     );
   }
 }
+
+TokenForm.propTypes = {
+  worker: PropTypes.string.isRequired
+};
 
 export default TokenForm;
