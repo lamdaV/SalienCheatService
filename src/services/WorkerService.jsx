@@ -10,13 +10,13 @@ class WorkerService {
   }
 
   serve(token, secret) {
-    const endpoint = `${this.baseUrl}/serve`;
+    const endpoint = `${this.baseUrl}/api/serve`;
     const request = {token, secret};
     return axios.post(endpoint, request);
   }
 
   stop(token, secret) {
-    const endpoint = `${this.baseUrl}/stop`;
+    const endpoint = `${this.baseUrl}/api/stop`;
     const request = {token, secret};
     return axios.post(endpoint, request);
   }
