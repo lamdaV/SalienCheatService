@@ -5,6 +5,10 @@ project was the inability to use Heroku workers after a mass suspension.
 
 ![DemoImage](https://raw.githubusercontent.com/lamdaV/SalienCheatService/master/demo.png?token=AK60HfKg-GoEmDjHuU2eze3wj7A5HcKaks5bQf0ywA%3D%3D)
 
+You can visit the demo [here](http://www.worker1.lamdav.com). Make sure
+it is `http` as I have not gotten around to setting up `https`.
+**Note:** Be warn that your secret over `http` is insecure and exposed.
+
 This project relies on
 - [SteamDB/SalienCheat](https://github.com/SteamDatabase/SalienCheat).
 
