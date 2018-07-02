@@ -9,8 +9,8 @@ class Credential extends Component {
     super(props);
 
     this.state = {
-      token: "",
-      secret: ""
+      token: props.credentialStore.getToken(),
+      secret: props.credentialStore.getSecret()
     };
 
     this.handleTokenChange = this.handleTokenChange.bind(this);
@@ -37,7 +37,7 @@ class Credential extends Component {
                     value={this.state.token}
                     onChange={this.handleTokenChange}
                     required/>
-        <Form.Input placeholder="Server Secret"
+        <Form.Input placeholder="Secret"
                     type="password"
                     value={this.state.secret}
                     onChange={this.handleSecretChange}

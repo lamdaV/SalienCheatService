@@ -20,6 +20,7 @@ class WorkerService extends Observable {
     this.send = this.send.bind(this);
     this.serve = this.serve.bind(this);
     this.stop = this.stop.bind(this);
+    this.register = this.register.bind(this);
   }
 
   subscribeToResponse(callback) {
@@ -56,6 +57,11 @@ class WorkerService extends Observable {
 
   stop(token, secret) {
     const endpoint = `${this.baseUrl}/api/stop`;
+    this.send(endpoint, token, secret);
+  }
+
+  register(token, secret) {
+    const endpoint = `${this.baseUrl}/api/register`;
     this.send(endpoint, token, secret);
   }
 }

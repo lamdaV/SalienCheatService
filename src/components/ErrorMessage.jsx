@@ -25,7 +25,7 @@ class ErrorMessage extends Component {
       if (error.response) { // request was responded to.
         this.setState((prevState, props) => Object.assign(prevState, {error: error.response.data}));
       } else if (error.request) { // request was sent but not responded to.
-        this.setState((prevState, props) => Object.assign(prevState, {error: error.request}));
+        this.setState((prevState, props) => Object.assign(prevState, {error: "Server is not responding"}));
       } else { // request was not sent.
         this.setState((prevState, props) => Object.assign(prevState, {error: error.message}));
       }

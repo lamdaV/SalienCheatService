@@ -2,6 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const bunyan = require("bunyan");
 const favicon = require("serve-favicon");
+const loki = require("lokijs");
+const randomstring = require("randomstring");
 
 const bodyParser = require("body-parser");
 const spawn = require("child_process").spawn;
@@ -27,6 +29,24 @@ const log = bunyan.createLogger({
       count: 3
     }
   ]
+});
+
+const db = new loki("salien.db", {
+  autosave: true,
+  verbose: true
+});
+db.loadDatabase({}, (error) => {
+  if (error) {
+    log.error(error.message);
+  } else {
+    if (db.getCollection("users") === null) {
+      db.addCollection("users", {
+        unique: ["token"],
+        indices: ["token"]
+      });
+    }
+    log.info("lokijs has been loaded");
+  }
 });
 
 const app = express();
@@ -68,9 +88,11 @@ app.post("/api/serve", (request, response) => {
   const token = request.body.token;
   const secret = request.body.secret;
 
-  if (validateSecret(secret)) {
+  const userCollection = db.getCollection("users");
+  const user = userCollection.findOne({token, secret});
+  if (validateSecret(secret) && user === null) {
     response.send(401)
-      .send();
+      .send("Incorrect token or secret");
     return;
   }
 
@@ -83,7 +105,7 @@ app.post("/api/serve", (request, response) => {
       }
     };
     const cheat = spawn("php", ["cheat.php"], options);
-    tokenToProcess.set(token, {cheat, secret});
+    tokenToProcess.set(token, cheat);
 
     cheat.on("error", (error) => {
       log.error(error);
@@ -109,19 +131,18 @@ app.post("/api/stop", (request, response) => {
   const token = request.body.token;
   const secret = request.body.secret;
 
-  if (tokenToProcess.has(token)) {
-    const processData = tokenToProcess.get(token);
-    const cheat = processData.cheat;
-    const secretUsed = processData.secret;
+  const userCollection = db.getCollection("users");
+  const user = userCollection.findOne({token, secret});
+  if (validateSecret(secret) && user === null) {
+    response.status(401)
+      .send("Invalid token or secret");
+    return;
+  }
 
-    if (secretUsed === secret) {
-      cheat.kill();
-      io.emit(token, `Termination for token ${token} bot has been sent.`);
-    } else {
-      response.status(401)
-        .send(`Invalid token or secret.`);
-      return;
-    }
+  if (tokenToProcess.has(token)) {
+    const cheat = tokenToProcess.get(token);
+    cheat.kill();
+    io.emit(token, `Termination for token ${token} bot has been sent.`);
   } else {
     io.emit(token, `No bot active for token ${token}.`);
   }
@@ -129,6 +150,29 @@ app.post("/api/stop", (request, response) => {
   response.status(200)
     .send();
 });
+
+app.post("/api/register", (request, response) => {
+  log.info(`[ REGISTER ] received request body ${JSON.stringify(request.body)}`);
+
+  const token = request.body.token;
+  const secretUsed = request.body.secret;
+
+  if (validateSecret(secretUsed)) {
+    response.status(401)
+      .send("Secret provided does not have permission to register other users");
+    return;
+  }
+
+  if (tokenToProcess.has(token)) {
+    tokenToProcess.get(token).kill();
+    io.emit(token, `Termination for token ${token} has been sent`);
+  }
+
+  const userCollection = db.getCollection("users");
+  const secret = randomstring.generate(40);
+  userCollection.insert({token, secret});
+  io.emit(token, `Registration complete! Token: ${token} | Secret: ${secret}`);
+})
 
 io.on("disconnect", (socket) => {
   log.info("user disconnected");

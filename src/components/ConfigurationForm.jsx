@@ -23,8 +23,8 @@ class ConfigurationForm extends Component {
           <Control credentialStore={this.props.credentialStore}
                    workerService={this.props.workerService}
                    messageStore={this.props.messageStore}/>
-          <ErrorMessage workerService={this.props.workerService}/>
         </Form>
+        <ErrorMessage workerService={this.props.workerService}/>
       </div>
     );
   }

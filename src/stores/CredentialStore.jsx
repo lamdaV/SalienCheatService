@@ -1,11 +1,18 @@
+import localStorage from "local-storage";
 import Observable from "../interfaces/Observable"
 
 class CredentialStore extends Observable {
   constructor() {
     super("token", "secret");
 
-    this.token = "";
-    this.secret = "";
+    this.token = localStorage.get("token");
+    this.secret = localStorage.get("secret");
+    if (this.token === null) {
+      this.token = "";
+    }
+    if (this.secret === null) {
+      this.secret = "";
+    }
 
     this.subscribeToToken = this.subscribeToToken.bind(this);
     this.subscribeToSecret = this.subscribeToSecret.bind(this);
@@ -25,20 +32,22 @@ class CredentialStore extends Observable {
 
   publishToken(token) {
     this.token = token;
-    this.publish("token", token);
+    localStorage.set("token", this.token);
+    this.publish("token", this.token);
   }
 
   publishSecret(secret) {
     this.secret = secret;
-    this.publish("secret", secret);
+    localStorage.set("secret", this.secret);
+    this.publish("secret", this.secret);
   }
 
   getToken() {
-    return this.getToken;
+    return this.token;
   }
 
   getSecret() {
-    return this.getSecret;
+    return this.secret;
   }
 }
 

@@ -15,8 +15,8 @@ class Control extends Component {
     this.unsubscribeToSecret = null;
 
     this.state = {
-      token: "",
-      secret: "",
+      token: props.credentialStore.getToken(),
+      secret: props.credentialStore.getSecret(),
       socket: io(this.props.workerService.getBaseUrl())
     };
 
@@ -74,6 +74,12 @@ class Control extends Component {
                 content="Stop"
                 disabled={this.state.token.length !== 32 || !this.state.secret}
                 onClick={this.validateAndSend(this.props.workerService.stop)}/>
+        <Button.Or/>
+        <Button type="submit"
+                color="green"
+                content="Register"
+                disabled={this.state.token.length !== 32 || !this.state.secret}
+                onClick={this.validateAndSend(this.props.workerService.register)}/>
       </Button.Group>
     );
   }

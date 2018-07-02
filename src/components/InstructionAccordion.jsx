@@ -60,7 +60,8 @@ class InstructionAccordion extends Component {
                  here
               </a>.
               Copy and paste your token in the "Steam Token" input field along
-              with the "Server Secret".
+              with the "Secret." If you are an admin, you may use your admin
+              "Server Secret" or register your own token specific secret.
             </List.Item>
           </List>
         </Accordion.Content>
@@ -110,6 +111,30 @@ class InstructionAccordion extends Component {
                target="_blank">
                GitHub
             </a>.
+          </p>
+        </Accordion.Content>
+
+        <Accordion.Title active={this.state.activeIndex === 4}
+                         index={4}
+                         onClick={this.handleClick}>
+          <Icon name="dropdown"/>
+          Registration
+        </Accordion.Title>
+        <Accordion.Content active={this.state.activeIndex === 4}>
+          <p>
+            To register, you must be trusted with the server secret. This
+            server secret has admin privileges. To register a new token,
+            enter the new token in "Steam Token" field and enter the
+            server secret in the "Secret" field. Upon registering, all
+            bot process for that token will be killed and a new token will
+            be generated. In the bot log, you will see the token followed by
+            its assigned secret.
+          </p>
+
+          <p>
+            This secret is token specific. If the secret is forgotten, you may
+            register a new one using your admin secret. Doing so will kill any
+            running bots and assign a new secret to the given token.
           </p>
         </Accordion.Content>
       </Accordion>
