@@ -16,7 +16,8 @@ class Control extends Component {
 
     this.state = {
       token: "",
-      secret: ""
+      secret: "",
+      socket: io(this.props.workerService.getBaseUrl())
     };
 
     this.listenToMessages = this.listenToMessages.bind(this);
@@ -42,8 +43,8 @@ class Control extends Component {
   }
 
   listenToMessages() {
-    if (!this.props.socket.hasListeners(this.state.token)) {
-      this.props.socket.on(this.state.token, (data) => {
+    if (!this.state.socket.hasListeners(this.state.token)) {
+      this.state.socket.on(this.state.token, (data) => {
         const message = data.toString("utf-8");
         this.props.messageStore.publishMessage(message);
       });
@@ -79,7 +80,6 @@ class Control extends Component {
 }
 
 Control.propTypes = {
-  socket: PropTypes.instanceOf(io.Socket).isRequired,
   credentialStore: PropTypes.instanceOf(CredentialStore).isRequired,
   workerService: PropTypes.instanceOf(WorkerService).isRequired,
   messageStore: PropTypes.instanceOf(MessageStore).isRequired
