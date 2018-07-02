@@ -87,11 +87,11 @@ class InstructionAccordion extends Component {
                          index={2}
                          onClick={this.handleClick}>
           <Icon name="dropdown"/>
-          Returning to site after starting bot?
+          Returning to the site after starting bot?
         </Accordion.Title>
         <Accordion.Content active={this.state.activeIndex === 2}>
           <p>
-            Enter your credentials and your existing bot feed will be resume
+            Enter your credentials and your existing bot feed will resume
             streaming to your webpage.
           </p>
         </Accordion.Content>

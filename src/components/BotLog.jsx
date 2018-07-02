@@ -1,11 +1,35 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Message, Segment } from "semantic-ui-react";
+import MessageStore from "../stores/MessageStore";
 
 class BotLog extends Component {
   constructor(props) {
     super(props);
     this.ender = null;
+    this.unsubscribe = null;
+
+    this.state = {
+      messages: props.messageStore.getMessages()
+    };
+  }
+
+  componentDidMount() {
+    this.unsubscribe = this.props.messageStore.subscribeToMessages((messages) => {
+      this.setState((prevState, props) => Object.assign(prevState, {messages}));
+    });
+  }
+
+  componentDidUpdate(prevState, prevProps) {
+    if (this.ender) {
+      this.ender.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.unsubscribe) {
+      this.unsubscribe();
+    }
   }
 
   constructLogMessages(message, index) {
@@ -15,12 +39,6 @@ class BotLog extends Component {
                size="mini"
                content={message}/>
     );
-  }
-
-  componentDidUpdate(prevState, prevProps) {
-    if (this.ender) {
-      this.ender.scrollIntoView({ behavior: "smooth" });
-    }
   }
 
   render() {
@@ -34,17 +52,12 @@ class BotLog extends Component {
       clear: "both"
     };
 
-    let messages = this.props.messages;
-    if (messages.length > this.props.limit) {
-      messages = messages.slice(messages.length - this.props.limit, messages.length)
-    }
-
     return (
       <Segment.Group>
         <Segment content="Bot Logs"/>
 
         <Segment style={logStyle}>
-          {messages.map(this.constructLogMessages)}
+          {this.state.messages.map(this.constructLogMessages)}
           <div style={divEnderStyle}
                ref={(element) => { this.ender = element; }}/>
         </Segment>
@@ -55,14 +68,8 @@ class BotLog extends Component {
   }
 }
 
-BotLog.defaultProps = {
-  messages: [],
-  limit: 100
-};
-
 BotLog.propTypes = {
-  messages: PropTypes.arrayOf(PropTypes.string),
-  limit: PropTypes.number
+  messageStore: PropTypes.instanceOf(MessageStore).isRequired
 };
 
 export default BotLog;
