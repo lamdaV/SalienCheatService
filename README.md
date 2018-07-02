@@ -8,6 +8,9 @@ project was the inability to use Heroku workers after a mass suspension.
 This project relies on
 - [SteamDB/SalienCheat](https://github.com/SteamDatabase/SalienCheat).
 
+This project will store your data within `local-storage` so to ease your next
+visit.
+
 # Install
 You need to have a device with a public ip and, preferably, a -nix based
 operating system.
@@ -35,3 +38,26 @@ and custom secret.
 is a non-trivial task for those without experience. The bare minimum requirement
 is `php` and `node`. The rest is up to you on how you want to set up a public ip
 or url.
+
+# Registration
+Registration is available and controlled via means of a `SECRET`. This `SECRET`
+is the same one specified in the `.env` file. This is mainly for the server
+maintainer to have the ability to selective register specific user via their
+specified token.
+
+To do so, the server maintainer must have another user's steam token and the
+server secret. Enter the credentials in their appropriate fields and click
+register. This will create a token-bound secret. The server maintainer can
+provide this to the newly registered user for the user to control and monitor
+their bot.
+
+In the case that the user forgets their secret, the server maintainer can redo
+the above process. This will kill any running bots before issuing a new
+registration token.
+
+With the server secret, the server maintainer can monitor any steam bot given
+that the maintainer has recollection of the token used.
+
+# Credential Storage
+Upon submitting any credentials, the token and secret will be saved in
+local storage to ease future visits.
