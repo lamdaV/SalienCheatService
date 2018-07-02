@@ -174,7 +174,7 @@ app.post("/api/register", (request, response) => {
   if (user === null) {
     userCollection.insert({token, secret});
   } else {
-    userCollection.update({token, secret});
+    userCollection.update(Object.assign(user, {secret}));
   }
   io.emit(token, `Registration complete! Token: ${token} | Secret: ${secret}`);
 })
