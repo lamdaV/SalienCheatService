@@ -55,6 +55,10 @@ class Control extends Component {
     return ((event, data) => {
       if (this.state.token.length === 32 && this.state.secret) {
         this.listenToMessages();
+        if (data.content === "Submit") {
+          this.props.credentialStore.save();
+        }
+
         callback(this.state.token, this.state.secret);
       }
     });

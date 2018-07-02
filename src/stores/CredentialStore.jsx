@@ -32,14 +32,17 @@ class CredentialStore extends Observable {
 
   publishToken(token) {
     this.token = token;
-    localStorage.set("token", this.token);
     this.publish("token", this.token);
   }
 
   publishSecret(secret) {
     this.secret = secret;
-    localStorage.set("secret", this.secret);
     this.publish("secret", this.secret);
+  }
+
+  save() {
+    localStorage.set("token", this.token);
+    localStorage.set("secret", this.secret);
   }
 
   getToken() {
