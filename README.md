@@ -14,6 +14,7 @@ operating system.
 
 Create a `.env` file with
 ```
+REACT_APP_DEFAULT_MESSAGE_LIMIT=one-of-100-500-1000
 REACT_APP_BACKEND_URL=public-ip-or-url-of-backend-server
 SALIEN_CHEAT_DIRECTORY=path-to-SalienCheat
 SECRET=some-secret-to-limit-access
